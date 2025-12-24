@@ -12,6 +12,8 @@ const TodoList = () => {
   const [inputText, setInputText] = useState("");
   const [error, setError] = useState("");
 
+  // For updates
+
   //Function that handle the inputText
   const handleInputTodoChange = (e) => {
     setInputText(e.target.value);
@@ -54,9 +56,19 @@ const TodoList = () => {
     );
   };
 
+  // Updates
+  const handleUpdateTodo = (id, newText) => {
+    setListTodo((prevTodo) =>
+      prevTodo.map((currTodo) =>
+        currTodo.id === id ? { ...currTodo, data: newText } : currTodo
+      )
+    );
+  };
+
   // Total task
   const totalTask = listTodo.length;
   const completedTasks = listTodo.filter((todo) => todo.isComplete).length;
+
   return (
     <>
       <Wrapper className="tk-wrapper">
@@ -82,6 +94,7 @@ const TodoList = () => {
                   handleToggleComplete={handleToggleComplete}
                   totalTask={totalTask}
                   completedTasks={completedTasks}
+                  handleUpdateTodo = {handleUpdateTodo}
                 />
               </>
             );
@@ -92,10 +105,8 @@ const TodoList = () => {
 
         <div className="row border-top mt-4 pt-4">
           <div className="col-lg-12 d-flex justify-content-between">
-
-              <p>Total Task: {totalTask}</p>
-              <p>Task Completed: {completedTasks}</p>
-   
+            <p>Total Task: {totalTask}</p>
+            <p>Task Completed: {completedTasks}</p>
           </div>
         </div>
       </Wrapper>
